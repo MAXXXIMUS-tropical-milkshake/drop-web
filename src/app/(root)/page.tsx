@@ -55,7 +55,7 @@ function Item(it: number, {id, name, artist}: {
                     <span style={styles.artistName}>{artist || "Unknown Artist"}</span>
                 </div>
                 </div>
-                {/*<audio controls/>*/}
+                <audio controls style={{alignSelf: "center"}}/>
                 <div style={styles.footer}>
                     <button style={styles.iconButton}>
                         <FaTelegramPlane size={20} color="#fff"/>
