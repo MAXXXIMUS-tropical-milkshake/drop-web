@@ -6,9 +6,18 @@ import {Middleware} from "@/repositories/Middleware";
 import {useSession} from "@/context/AuthContext";
 import {useRouter} from "next/router";
 import {Swiper, SwiperSlide} from "swiper/react";
+import {FaTelegramPlane, FaPlay, FaShareAlt, FaPause} from "react-icons/fa";
+import {IoMdDownload} from "react-icons/io";
 
-function Item(it: number, {id}: {
-    id: string
+type Card = {
+    index: number;
+    id: string;
+    name: string;
+    artist: string;
+};
+
+function Item(it: number, {id, name, artist}: {
+    id: string, name: string, artist: string;
 }, isPaused: boolean, setIsPaused: (isPaused: boolean) => void): React.JSX.Element {
 
     return (
@@ -16,42 +25,48 @@ function Item(it: number, {id}: {
             style={{
                 display: "flex",
                 flex: 1,
-                height: "100%",
-                width: "100%",
+                justifyContent: "flex-end",
+                flexDirection: "column",
+                clipPath: `url(#squircleClip)`,
                 alignSelf: "center",
-                alignItems: "center",
-                justifyContent: "center",
+                background:
+                    "linear-gradient( 135deg, #9b26cf 10%, #32CCBC 100%)",
+                height: "60vh",
+                maxHeight: 1200,
+                width: "80vw",
+                maxWidth: 600,
             }}
         >
-            <div
-                style={{
-                    clipPath: `url(#squircleClip)`,
-                    alignSelf: "center",
-                    background:
-                        "linear-gradient( 135deg, #9b26cf 10%, #32CCBC 100%)",
-                    height: "50vh",
-                    width: "40vw"
-                }}
+            <div style={{visibility: "hidden", flex: 1}}></div>
+
+            <button
+                style={{...styles.pauseButton, margin: "auto", justifyContent: "center"}}
+                onClick={() => setIsPaused(!isPaused)}
             >
-                <TrackForm form={{id: id}} setForm={() => {
-                }}></TrackForm>
-                <button
-                    style={{
-                        backgroundColor: "#007BFF",
-                        padding: 10,
-                        margin: 5,
-                        borderRadius: 5,
-                        flex: 1,
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                    onClick={() => {
-                        if (isPaused) setIsPaused(false);
-                        else setIsPaused(true);
-                    }}
-                >
-                    {it.toString()}
-                </button>
+                {isPaused ? <FaPlay size={27} color="#fff"/> : <FaPause size={27} color="#fff"/>}
+            </button>
+
+            <div style={{flex: 1, flexDirection: "column", display: "flex", justifyContent: "flex-end"}}>
+                <div style={{margin: 20}}>
+                <div>
+                    <span style={styles.trackTitle}>{name || "Untitled"}</span>
+                </div>
+                <div>
+                    <span style={styles.artistName}>{artist || "Unknown Artist"}</span>
+                </div>
+                </div>
+                {/*<audio controls/>*/}
+                <div style={styles.footer}>
+                    <button style={styles.iconButton}>
+                        <FaTelegramPlane size={20} color="#fff"/>
+                    </button>
+                    <button style={styles.iconButton}>
+                        <IoMdDownload size={20} color="#fff"/>
+                    </button>
+                    <button style={styles.iconButton}>
+                        <FaShareAlt size={20} color="#fff"/>
+                    </button>
+                </div>
             </div>
 
             <svg width="1" height="1" viewBox="0 0 1 1" style={{position: "absolute"}} fill="none"
@@ -67,27 +82,8 @@ function Item(it: number, {id}: {
         </div>);
 }
 
-type Card = {
-    index: number;
-    id: string;
-    name: string;
-    artist: string;
-};
-
 export default function Page(): React.JSX.Element {
     const [it, setIt] = useState<Card[]>([]);
-
-    // const ref = React.useRef<ICarouselInstance>(null);
-    // const animationStyle = React.useCallback((value: number) => {
-    //     "worklet";
-    //     const translateY = interpolate(value, [-1, 0, 1], [-sh * 1.1, 0, sh * 1.1]);
-    //     const scale = interpolate(value, [-1, 0, 1], [0.93, 1.07, 0.93]);
-    //     const opacity = interpolate(value, [-0.75, 0, 1], [0.5, 1, 0.5]);
-    //     return {
-    //         transform: [{ translateY }, { scale }],
-    //         opacity,
-    //     };
-    // }, []);
 
     // const player = useAudioPlayer("");
     // const router = useRouter();
@@ -191,6 +187,7 @@ export default function Page(): React.JSX.Element {
                 flex: 1,
                 height: "100%",
                 flexDirection: "column",
+                alignItems: "center"
             }}
             pagination={true}
             slidesPerView={1.6}
@@ -199,12 +196,75 @@ export default function Page(): React.JSX.Element {
             direction={"vertical"}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}>
-            <SwiperSlide>{Item(1, {id: "1"}, isPaused, setIsPaused)}</SwiperSlide>
-            <SwiperSlide>{Item(1, {id: "2"}, isPaused, setIsPaused)}</SwiperSlide>
-            <SwiperSlide>{Item(1, {id: "3"}, isPaused, setIsPaused)}</SwiperSlide>
-            <SwiperSlide>{Item(1, {id: "4"}, isPaused, setIsPaused)}</SwiperSlide>
-            <SwiperSlide>{Item(1, {id: "5"}, isPaused, setIsPaused)}</SwiperSlide>
-
+            <SwiperSlide>{Item(1, {
+                id: "1",
+                name: "lolkek",
+                artist: "cheburek"
+            }, isPaused, setIsPaused)}</SwiperSlide>
+            <SwiperSlide>{Item(1, {
+                id: "1",
+                name: "lolkek",
+                artist: "cheburek"
+            }, isPaused, setIsPaused)}</SwiperSlide>
+            <SwiperSlide>{Item(1, {
+                id: "1",
+                name: "lolkek",
+                artist: "cheburek"
+            }, isPaused, setIsPaused)}</SwiperSlide>
+            {/*<SwiperSlide>{Item(1, {id: "2"}, isPaused, setIsPaused)}</SwiperSlide>*/}
+            {/*<SwiperSlide>{Item(1, {id: "3"}, isPaused, setIsPaused)}</SwiperSlide>*/}
+            {/*<SwiperSlide>{Item(1, {id: "4"}, isPaused, setIsPaused)}</SwiperSlide>*/}
+            {/*<SwiperSlide>{Item(1, {id: "5"}, isPaused, setIsPaused)}</SwiperSlide>*/}
         </Swiper>
     );
 }
+const styles = {
+    button: {
+        backgroundColor: "#007BFF",
+        padding: 10,
+        margin: 5,
+        borderRadius: 5,
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    trackTitle: {
+        // fontSize: 24,
+        margin: 10,
+        fontWeight: "700",
+        color: "#000",
+    },
+    artistName: {
+        // fontSize: 16,
+        margin: 10,
+        color: "#555",
+        fontWeight: "500",
+        marginTop: 5,
+    },
+    pauseButton: {
+        padding: 10,
+        width: "5vmax",
+        height: "5vmax",
+        borderRadius: "100%",
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
+    },
+    footer: {
+        display: "flex",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        alignSelf: "center",
+        width: "100%",
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    iconButton: {
+        backgroundColor: "#1a1a1a",
+        borderRadius: "40%",
+        minWidth: 40,
+        minHeight: 40,
+        width: 50,
+        height: 50,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+};
