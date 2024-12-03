@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en" style={{height: "100vh", width: "100%"}}>
       <body
           style={{
-              height: "100vh",
+              height: "100%",
               width: "100%",
               overflow: "hidden",
               backgroundColor: '#5c5959',

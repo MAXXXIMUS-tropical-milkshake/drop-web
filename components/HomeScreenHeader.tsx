@@ -10,35 +10,23 @@ export default function HomeScreenHeader(/*modalProps: FiltersModalProps*/): Rea
             height: "7vh",
             display: 'flex',
             zIndex: '100',
-            position: "absolute",
+            position: "fixed",
             top: 0,
             width: "100%",
-            left: 0,
             flexDirection: "row",
-            justifyContent: "center",
+            justifyContent: "space-evenly",
             alignItems: "center",
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
             color: 'white',
         }}>
-            <div
-                style={styles.squircleContainer}
-                // squircleParams={squircleFormParams}
-            >
+            <div style={{...styles.squircleContainer, flex: 1}}>
                 <button onClick={() => {/*modalProps.setVisible(true)*/
-                }} style={styles.touchable}>
-                    {/*<Text style={styles.buttonText}>*/}setting{/*</Text>*/}
+                }} style={{...styles.touchable, textAlign: "center"}}>
+                    <span style={{...styles.buttonText, textAlign: "center"}}>setting</span>
                 </button>
             </div>
 
-            <div
-                style={{...styles.squircleContainer, ...styles.searchContainer}}
-                // squircleParams={squircleFormParams}
-            >
-                <div style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: "100%",
-                }}>
+            <div style={{...styles.squircleContainer, ...styles.searchContainer, resize: "horizontal", flex: 1}}>
                     {/*<Icon name="search" color="white" style={{*/}
                     {/*    fontSize: 20,*/}
                     {/*    padding: 0,*/}
@@ -51,34 +39,23 @@ export default function HomeScreenHeader(/*modalProps: FiltersModalProps*/): Rea
                         value={searchQuery}
                         onChange={(text) => setSearchQuery(text)}
                     />
-                </div>
             </div>
 
-            <div
-                style={styles.squircleContainer}
-                // squircleParams={squircleFormParams}
-            >
-                <button onClick={() => router.push("/(root)/upload")} style={styles.touchable}>
-                    upload beat
-                </button>
-            </div>
-
-            {/*<FiltersModal visible={modalProps.visible} setVisible={modalProps.setVisible}/>*/}
+            {/*<div style={{...styles.squircleContainer}}>*/}
+            {/*    <button onClick={() => router.push("/(root)/upload")} style={styles.touchable}>*/}
+            {/*        <span style={{...styles.buttonText, textAlign: "center"}}>upload beat</span>*/}
+            {/*    </button>*/}
+            {/*</div>*/}
         </div>
     );
 }
 
 const styles = {
-    headerContainer: {
-        height: "7vh",
-        flexDirection: "row",
-        // backgroundColor: 'black',
-        justifyContent: "center",
-        alignItems: "center",
-        // paddingHorizontal: 20,
-    },
     squircleContainer: {
-        width: "12%",
+        maxWidth: "300",
+        backgroundColor: "#1a1a1a",
+        border: "1px solid #54545657",
+        borderRadius: 25,
         margin: "1%",
         height: "60%",
         justifyContent: "center",
@@ -86,14 +63,18 @@ const styles = {
     },
     touchable: {
         justifyContent: "center",
+        border: 0,
+        backgroundColor: "transparent",
         alignItems: "center",
+        color: 'white',
         width: "100%",
         height: "100%",
     },
     buttonText: {
-        color: "white",
+        fontColor: "white",
+        fontSize: 14,
         fontWeight: "700",
-        textAlign: "center",
+        // textAlign: "center",
     },
     searchContainer: {
         width: "25%",
