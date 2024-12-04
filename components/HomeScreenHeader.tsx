@@ -5,6 +5,7 @@ import {router} from "next/client";
 
 export default function HomeScreenHeader(/*modalProps: FiltersModalProps*/): React.JSX.Element {
     const [searchQuery, setSearchQuery] = useState("");
+    const [isPressed, setIsPressed] = useState(false);
     return (
         <div style={{
             height: "7vh",
@@ -16,17 +17,27 @@ export default function HomeScreenHeader(/*modalProps: FiltersModalProps*/): Rea
             flexDirection: "row",
             justifyContent: "space-evenly",
             alignItems: "center",
-            backgroundColor: 'transparent',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
             color: 'white',
         }}>
-            <div style={{...styles.squircleContainer, flex: 1}}>
-                <button onClick={() => {/*modalProps.setVisible(true)*/
-                }} style={{...styles.touchable, textAlign: "center"}}>
-                    <span style={{...styles.buttonText, textAlign: "center"}}>setting</span>
+            <div
+                style={{
+                    ...styles.squircleContainer,
+                    ...(isPressed ? styles.squircleContainerActive : {}),
+                }}
+                onMouseDown={() => setIsPressed(true)}
+                onMouseUp={() => setIsPressed(false)}
+                onMouseLeave={() => setIsPressed(false)}
+            >
+                <button
+                    onClick={() => {}}
+                    style={styles.touchable}
+                >
+                    <span style={styles.buttonText}>Settings</span>
                 </button>
             </div>
 
-            <div style={{...styles.squircleContainer, ...styles.searchContainer, resize: "horizontal", flex: 1}}>
+            <div style={{...styles.squircleContainer, ...styles.searchContainer, resize: "horizontal"}}>
                     {/*<Icon name="search" color="white" style={{*/}
                     {/*    fontSize: 20,*/}
                     {/*    padding: 0,*/}
@@ -35,17 +46,16 @@ export default function HomeScreenHeader(/*modalProps: FiltersModalProps*/): Rea
                     <input
                         style={styles.searchInput}
                         placeholder="search"
-                        // placeholderTextColor="#888"
                         value={searchQuery}
-                        onChange={(text) => setSearchQuery(text)}
+                        onChange={(text) => setSearchQuery(text.target.value)}
                     />
             </div>
 
-            {/*<div style={{...styles.squircleContainer}}>*/}
-            {/*    <button onClick={() => router.push("/(root)/upload")} style={styles.touchable}>*/}
-            {/*        <span style={{...styles.buttonText, textAlign: "center"}}>upload beat</span>*/}
-            {/*    </button>*/}
-            {/*</div>*/}
+            {/* <div style={{...styles.squircleContainer}}>
+               <button onClick={() => router.push("/(root)/upload")} style={styles.touchable}>
+                   <span style={{...styles.buttonText, textAlign: "center"}}>upload beat</span>
+               </button>
+            </div> */}
         </div>
     );
 }
@@ -93,5 +103,9 @@ const styles = {
         padding: 0,
         margin: 10,
         minWidth: 100,
+    },
+    squircleContainerActive: {
+        transform: "scale(0.95)",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
     },
 };
