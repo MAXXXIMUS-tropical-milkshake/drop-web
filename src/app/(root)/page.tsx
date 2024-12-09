@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {FaTelegramPlane, FaPlay, FaShareAlt, FaPause} from "react-icons/fa";
 import {IoMdDownload} from "react-icons/io";
+import Image from "next/image";
 
 type Card = {
     index: number;
@@ -16,8 +17,8 @@ type Card = {
     artist: string;
 };
 
-function Item(it: number, {id, name, artist}: {
-    id: string, name: string, artist: string;
+function Item(it: number, {id, name, artist, image}: {
+    id: string, name: string, artist: string, image: string;
 }, isPaused: boolean, setIsPaused: (isPaused: boolean) => void): React.JSX.Element {
 
     return (
@@ -29,14 +30,25 @@ function Item(it: number, {id, name, artist}: {
                 flexDirection: "column",
                 clipPath: `url(#squircleClip)`,
                 alignSelf: "center",
-                background:
-                    "linear-gradient( 135deg, #9b26cf 10%, #32CCBC 100%)",
+                background: "#FF1158",
                 height: "60vh",
                 maxHeight: 1200,
-                width: "80vw",
-                maxWidth: 600,
+                width: "25vw",
+                maxWidth: 400,
+                // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
             }}
+            
         >
+
+            {/* <div style={{ flex: 1, position: "relative" }}>
+                <Image
+                    src={image || "https://example.com/default-image.jpg"}
+                    alt="Beat cover"
+                    // layout="fill"
+                    objectFit="cover"
+                />
+            </div> */}
+
             <div style={{visibility: "hidden", flex: 1}}></div>
 
             <button
@@ -55,7 +67,7 @@ function Item(it: number, {id, name, artist}: {
                     <span style={styles.artistName}>{artist || "Unknown Artist"}</span>
                 </div>
                 </div>
-                <audio controls style={{alignSelf: "center"}}/>
+                {/* <audio controls style={{alignSelf: "center"}}/> */}
                 <div style={styles.footer}>
                     <button style={styles.iconButton}>
                         <FaTelegramPlane size={20} color="#fff"/>
@@ -199,9 +211,10 @@ export default function Page(): React.JSX.Element {
             <SwiperSlide>{Item(1, {
                 id: "1",
                 name: "lolkek",
-                artist: "cheburek"
+                artist: "cheburek",
+                image: "https://example.com/path-to-image.jpg",
             }, isPaused, setIsPaused)}</SwiperSlide>
-            <SwiperSlide>{Item(1, {
+            {/* <SwiperSlide>{Item(1, {
                 id: "1",
                 name: "lolkek",
                 artist: "cheburek"
@@ -210,7 +223,7 @@ export default function Page(): React.JSX.Element {
                 id: "1",
                 name: "lolkek",
                 artist: "cheburek"
-            }, isPaused, setIsPaused)}</SwiperSlide>
+            }, isPaused, setIsPaused)}</SwiperSlide> */}
             {/*<SwiperSlide>{Item(1, {id: "2"}, isPaused, setIsPaused)}</SwiperSlide>*/}
             {/*<SwiperSlide>{Item(1, {id: "3"}, isPaused, setIsPaused)}</SwiperSlide>*/}
             {/*<SwiperSlide>{Item(1, {id: "4"}, isPaused, setIsPaused)}</SwiperSlide>*/}
@@ -229,13 +242,13 @@ const styles = {
         justifyContent: "center",
     },
     trackTitle: {
-        // fontSize: 24,
+        fontSize: 30,
         margin: 10,
         fontWeight: "700",
         color: "#000",
     },
     artistName: {
-        // fontSize: 16,
+        fontSize: 25,
         margin: 10,
         color: "#555",
         fontWeight: "500",
@@ -246,7 +259,8 @@ const styles = {
         width: "5vmax",
         height: "5vmax",
         borderRadius: "100%",
-        backgroundColor: "rgba(255, 255, 255, 0.5)",
+        backgroundColor: "rgba(255, 255, 255, 0.3)",
+        border: "none",
     },
     footer: {
         display: "flex",
@@ -262,9 +276,11 @@ const styles = {
         borderRadius: "40%",
         minWidth: 40,
         minHeight: 40,
-        width: 50,
-        height: 50,
+        width: 55,
+        height: 55,
         justifyContent: "center",
         alignItems: "center",
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+        border: "none",
     },
 };
