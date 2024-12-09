@@ -17,7 +17,8 @@ export default function HomeScreenHeader(/*modalProps: FiltersModalProps*/): Rea
             flexDirection: "row",
             justifyContent: "space-evenly",
             alignItems: "center",
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            boxShadow: '0 20px 20px 10px rgba(0, 0, 0, 0.75)',
             color: 'white',
         }}>
             <div
