@@ -1,14 +1,10 @@
 "use client";
-import React, {useContext, useEffect, useState} from "react";
-import TrackForm from "@/components/TrackForm/TrackForm";
+import React, {useEffect, useState} from "react";
 import {AudioRepository} from "@/repositories/AudioRepository";
 import {Middleware} from "@/repositories/Middleware";
 import {useSession} from "@/context/AuthContext";
-// import {useRouter} from "next/router";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {FaTelegramPlane, FaPlay, FaShareAlt, FaPause} from "react-icons/fa";
-import {IoMdDownload} from "react-icons/io";
-import Image from "next/image";
 import {BeatCard} from "@/components/BeatCard/BeatCard";
 
 type Card = {
@@ -17,84 +13,6 @@ type Card = {
     name: string;
     artist: string;
 };
-
-function Item(it: number, {id, name, artist, image}: {
-    id: string, name: string, artist: string, image: string;
-}, isPaused: boolean, setIsPaused: (isPaused: boolean) => void): React.JSX.Element {
-
-    return (
-        <div
-            style={{
-                display: "flex",
-                flex: 1,
-                justifyContent: "flex-end",
-                flexDirection: "column",
-                clipPath: `url(#squircleClip)`,
-                alignSelf: "center",
-                background: "#FF1158",
-                height: "60vh",
-                maxHeight: 1200,
-                width: "80vw",
-                maxWidth: 600,
-                // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-            }}
-
-        >
-
-            {/* <div style={{ flex: 1, position: "relative" }}>
-                <Image
-                    src={image || "https://example.com/default-image.jpg"}
-                    alt="Beat cover"
-                    // layout="fill"
-                    objectFit="cover"
-                />
-            </div> */}
-
-            <div style={{visibility: "hidden", flex: 1}}></div>
-
-            <button
-                style={{...styles.pauseButton, margin: "auto", justifyContent: "center"}}
-                onClick={() => setIsPaused(!isPaused)}
-            >
-                {isPaused ? <FaPlay size={27} color="#fff"/> : <FaPause size={27} color="#fff"/>}
-            </button>
-
-            <div style={{flex: 1, flexDirection: "column", display: "flex", justifyContent: "flex-end"}}>
-                <div style={{margin: 20}}>
-                    <div>
-                        <span style={styles.trackTitle}>{name || "Untitled"}</span>
-                    </div>
-                    <div>
-                        <span style={styles.artistName}>{artist || "Unknown Artist"}</span>
-                    </div>
-                </div>
-                {/* <audio controls style={{alignSelf: "center"}}/> */}
-                <div style={{...styles.footer, flexShrink: 0}}>
-                    <button style={{...styles.iconButton, flex: 2, flexShrink: 0}}>
-                        <IoMdDownload size={20} color="#fff"/>
-                        скачать
-                    </button>
-                    <button style={{...styles.iconButton, flex: 1, flexShrink: 0}}>
-                        <FaTelegramPlane size={20} color="#fff"/>
-                    </button>
-                    <button style={{...styles.iconButton, flex: 1, flexShrink: 0,}}>
-                        <FaShareAlt size={20} color="#fff"/>
-                    </button>
-                </div>
-            </div>
-
-            <svg width="1" height="1" viewBox="0 0 1 1" style={{position: "absolute"}} fill="none"
-                 xmlns="http://www.w3.org/2000/svg" display={"hidden"}>
-                <clipPath id="squircleClip" clipPathUnits="objectBoundingBox">
-                    <path d="M 0,0.5
-                C 0,0  0,0  0.5,0
-                  1,0  1,0  1,0.5
-                  1,1  1,1  0.5,1
-                  0,1  0,1  0,0.5"></path>
-                </clipPath>
-            </svg>
-        </div>);
-}
 
 export default function Page(): React.JSX.Element {
     const [it, setIt] = useState<Card[]>([]);
@@ -207,7 +125,7 @@ export default function Page(): React.JSX.Element {
                 alignItems: "center"
             }}
             pagination={true}
-            slidesPerView={1.6}
+            slidesPerView={1.4}
             spaceBetween={50}
             centeredSlides={true}
             direction={"vertical"}
@@ -215,26 +133,23 @@ export default function Page(): React.JSX.Element {
             onSwiper={(swiper) => console.log(swiper)}>
 
             <SwiperSlide>
-                <BeatCard title={"lolkek"} author={"cheburek"} coverImage={"path/to/img"} tags={[]}/>
+                <BeatCard title={"lolkek"} author={"cheburek"} coverImage={"path/to/img"} tags={[
+                    {type: "primary", label: "lol", value: "kek"},
+                    {type: "secondary", label: "lol", value: "kek"}
+                ]}/>
             </SwiperSlide>
-            {/*<SwiperSlide>{Item(1, {*/}
-            {/*    id: "3",*/}
-            {/*    name: "lolkek",*/}
-            {/*    artist: "cheburek",*/}
-            {/*    image: "https://example.com/path-to-image.jpg",*/}
-            {/*}, isPaused, setIsPaused)}</SwiperSlide>*/}
-            {/*<SwiperSlide>{Item(1, {*/}
-            {/*    id: "4",*/}
-            {/*    name: "lolkek",*/}
-            {/*    artist: "cheburek",*/}
-            {/*    image: "https://example.com/path-to-image.jpg",*/}
-            {/*}, isPaused, setIsPaused)}</SwiperSlide>*/}
-            {/*<SwiperSlide>{Item(1, {*/}
-            {/*    id: "5",*/}
-            {/*    name: "lolkek",*/}
-            {/*    artist: "cheburek",*/}
-            {/*    image: "https://example.com/path-to-image.jpg",*/}
-            {/*}, isPaused, setIsPaused)}</SwiperSlide>*/}
+            <SwiperSlide>
+                <BeatCard title={"lolkek"} author={"cheburek"} coverImage={"path/to/img"} tags={[
+                    {type: "primary", label: "lol", value: "kek"},
+                    {type: "secondary", label: "lol", value: "kek"}
+                ]}/>
+            </SwiperSlide>
+            <SwiperSlide>
+                <BeatCard title={"lolkek"} author={"cheburek"} coverImage={"path/to/img"} tags={[
+                    {type: "primary", label: "lol", value: "kek"},
+                    {type: "secondary", label: "lol", value: "kek"}
+                ]}/>
+            </SwiperSlide>
         </Swiper>
     );
 }

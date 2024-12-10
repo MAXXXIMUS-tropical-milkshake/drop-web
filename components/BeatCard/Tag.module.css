@@ -23,6 +23,8 @@
 .value {
     display: flex;
     align-items: center;
+    justify-content: center;
+    align-self: center;
     gap: 3px;
     color: #fff;
     font-weight: 900;
@@ -31,8 +33,12 @@
 
 .valueChip {
     border-radius: 50px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    align-self: center;
     background: linear-gradient(0deg, rgba(61, 61, 61, 0.5) 0%, rgba(61, 61, 61, 0.5) 100%), rgba(127, 127, 127, 0.4);
-    background-blend-mode: overlay, luminosity;
+    lend-mode: overlay, luminosity;
     min-height: 23px;
     padding: 0 10px;
 }
