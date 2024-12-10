@@ -1,0 +1,38 @@
+
+.tag {
+    justify-content: center;
+    align-items: end;
+    border-radius: 25px;
+    background: linear-gradient(0deg, #3d3d3d 0%, #3d3d3d 100%), rgba(127, 127, 127, 0.5);
+    background-blend-mode: overlay, luminosity;
+    box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(25px);
+    display: flex;
+    min-height: 29px;
+    gap: 5px;
+    white-space: nowrap;
+    padding: 3px 3px 3px 12px;
+}
+
+.label {
+    color: #aeaeb2;
+    font-weight: 400;
+    line-height: 2;
+}
+
+.value {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: #fff;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.valueChip {
+    border-radius: 50px;
+    background: linear-gradient(0deg, rgba(61, 61, 61, 0.5) 0%, rgba(61, 61, 61, 0.5) 100%), rgba(127, 127, 127, 0.4);
+    background-blend-mode: overlay, luminosity;
+    min-height: 23px;
+    padding: 0 10px;
+}

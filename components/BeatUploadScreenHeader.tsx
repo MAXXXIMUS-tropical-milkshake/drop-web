@@ -1,24 +1,22 @@
 import React from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {Link, router} from "expo-router";
+import {router} from "next/client";
 
 export default function BeatUploadScreenHeader(): React.JSX.Element {
-    return <View style={{height: 200}}>
-        <TouchableOpacity style={styles.button} onPress={() => router.back()}>
-            <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
+    return <div style={{height: 200}}>
+        <button style={{...styles.button, flexDirection: 'column',}} onClick={() => router.back()}>
+            <p style={styles.buttonText}>Back</p>
+        </button>
 
-    </View>;
+    </div>;
 }
-const styles = StyleSheet.create({
+const styles = {
     button: {
         margin: 10,
         backgroundColor: 'grey',
-        flexDirection: 'column',
     },
     buttonText: {
         margin: 10,
         alignSelf: 'center',
 
     }
-});
+};

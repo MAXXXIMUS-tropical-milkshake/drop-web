@@ -1,6 +1,5 @@
 import React from "react";
-import styles from "./SignupFormStyles.tsx";
-import { TextInput, View, Text } from "react-native";
+import {styles} from "./SignupFormStyles";
 
 type SignupFormProps = {
   form: {
@@ -25,92 +24,92 @@ type SignupFormProps = {
 
 function SignupForm(props: SignupFormProps): React.JSX.Element {
   return (
-    <View>
-      <View style={styles.input}>
-        <Text style={styles.inputLabel}>Username</Text>
-        <TextInput
+    <div>
+      <div style={styles.input}>
+        <p style={styles.inputLabel}>Username</p>
+        <input
           autoCapitalize="none"
-          autoCorrect={false}
+          // autoCorrect={false}
           placeholder="user123"
-          placeholderTextColor="#6b7280"
+          // placeholderTextColor="#6b7280"
           style={styles.inputControl}
           value={props.form.username}
-          onChangeText={(username: string) =>
-            props.setForm({ ...props.form, username })
-          }
+          // onChange={(username: string) =>
+          //   props.setForm({ ...props.form, username })
+          // }
         />
-      </View>
-      <View style={styles.input}>
-        <Text style={styles.inputLabel}>Email address</Text>
-        <TextInput
+      </div>
+      <div style={styles.input}>
+        <p style={styles.inputLabel}>Email address</p>
+        <input
           autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
+          // autoCorrect={false}
+          // keyboardType="email-address"
           placeholder="qwerty@example.com"
-          placeholderTextColor="#6b7280"
+          // placeholderTextColor="#6b7280"
           style={styles.inputControl}
           value={props.form.email}
-          onChangeText={(email: string) =>
-            props.setForm({ ...props.form, email })
-          }
+          // onChangeText={(email: string) =>
+          //   props.setForm({ ...props.form, email })
+          // }
         />
-      </View>
-      <View style={styles.input}>
-        <Text style={styles.inputLabel}>First name</Text>
-        <TextInput
+      </div>
+      <div style={styles.input}>
+        <p style={styles.inputLabel}>First name</p>
+        <input
           autoCapitalize="none"
-          autoCorrect={false}
+          // autoCorrect={false}
           placeholder="Maksim"
-          placeholderTextColor="#6b7280"
+          // placeholderTextColor="#6b7280"
           style={styles.inputControl}
           value={props.form.first_name}
-          onChangeText={(first_name: string) =>
-            props.setForm({ ...props.form, first_name })
-          }
+          // onChangeText={(first_name: string) =>
+          //   props.setForm({ ...props.form, first_name })
+          // }
         />
-      </View>
-      <View style={styles.input}>
-        <Text style={styles.inputLabel}>Last name</Text>
-        <TextInput
+      </div>
+      <div style={styles.input}>
+        <p style={styles.inputLabel}>Last name</p>
+        <input
           autoCapitalize="none"
-          autoCorrect={false}
+          // autoCorrect={false}
           placeholder="Ivanov"
-          placeholderTextColor="#6b7280"
+          // placeholderTextColor="#6b7280"
           style={styles.inputControl}
           value={props.form.last_name}
-          onChangeText={(last_name: string) =>
-            props.setForm({ ...props.form, last_name })
-          }
+          // onChangeText={(last_name: string) =>
+          //   props.setForm({ ...props.form, last_name })
+          // }
         />
-      </View>
-      <View style={styles.input}>
-        <Text style={styles.inputLabel}>Pseudonym</Text>
-        <TextInput
+      </div>
+      <div style={styles.input}>
+        <p style={styles.inputLabel}>Pseudonym</p>
+        <input
           autoCapitalize="none"
-          autoCorrect={false}
+          // autoCorrect={false}
           placeholder="Super_max228"
-          placeholderTextColor="#6b7280"
+          // placeholderTextColor="#6b7280"
           style={styles.inputControl}
           value={props.form.pseudonym}
-          onChangeText={(pseudonym: string) =>
-            props.setForm({ ...props.form, pseudonym })
-          }
+          // onChangeText={(pseudonym: string) =>
+          //   props.setForm({ ...props.form, pseudonym })
+          // }
         />
-      </View>
-      <View style={styles.input}>
-        <Text style={styles.inputLabel}>Password</Text>
-        <TextInput
-          secureTextEntry
+      </div>
+      <div style={styles.input}>
+        <p style={styles.inputLabel}>Password</p>
+        <input
+          // secureTextEntry
           placeholder="*********"
-          placeholderTextColor="#6b7280"
+          // placeholderTextColor="#6b7280"
           style={styles.inputControl}
           value={props.form.password}
-          onChangeText={(password: string) =>
-            props.setForm({ ...props.form, password })
-          }
+          // onChangeText={(password: string) =>
+            //   props.setForm({ ...props.form, password })
+            // }
         />
-      </View>
-    </View>
+      </div>
+    </div>
   );
 }
 

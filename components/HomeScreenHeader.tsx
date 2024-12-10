@@ -1,6 +1,6 @@
 'use client'
 import React, {useState} from "react";
-import {router} from "next/client";
+// import {router} from "next/client";
 // import FiltersModal, {FiltersModalProps} from "@/components/FiltersModal";
 
 export default function HomeScreenHeader(/*modalProps: FiltersModalProps*/): React.JSX.Element {

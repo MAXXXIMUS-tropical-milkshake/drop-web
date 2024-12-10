@@ -4,11 +4,12 @@ import TrackForm from "@/components/TrackForm/TrackForm";
 import {AudioRepository} from "@/repositories/AudioRepository";
 import {Middleware} from "@/repositories/Middleware";
 import {useSession} from "@/context/AuthContext";
-import {useRouter} from "next/router";
+// import {useRouter} from "next/router";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {FaTelegramPlane, FaPlay, FaShareAlt, FaPause} from "react-icons/fa";
 import {IoMdDownload} from "react-icons/io";
 import Image from "next/image";
+import {BeatCard} from "@/components/BeatCard/BeatCard";
 
 type Card = {
     index: number;
@@ -33,11 +34,11 @@ function Item(it: number, {id, name, artist, image}: {
                 background: "#FF1158",
                 height: "60vh",
                 maxHeight: 1200,
-                width: "25vw",
-                maxWidth: 400,
+                width: "80vw",
+                maxWidth: 600,
                 // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
             }}
-            
+
         >
 
             {/* <div style={{ flex: 1, position: "relative" }}>
@@ -60,22 +61,23 @@ function Item(it: number, {id, name, artist, image}: {
 
             <div style={{flex: 1, flexDirection: "column", display: "flex", justifyContent: "flex-end"}}>
                 <div style={{margin: 20}}>
-                <div>
-                    <span style={styles.trackTitle}>{name || "Untitled"}</span>
-                </div>
-                <div>
-                    <span style={styles.artistName}>{artist || "Unknown Artist"}</span>
-                </div>
+                    <div>
+                        <span style={styles.trackTitle}>{name || "Untitled"}</span>
+                    </div>
+                    <div>
+                        <span style={styles.artistName}>{artist || "Unknown Artist"}</span>
+                    </div>
                 </div>
                 {/* <audio controls style={{alignSelf: "center"}}/> */}
-                <div style={styles.footer}>
-                    <button style={styles.iconButton}>
+                <div style={{...styles.footer, flexShrink: 0}}>
+                    <button style={{...styles.iconButton, flex: 2, flexShrink: 0}}>
+                        <IoMdDownload size={20} color="#fff"/>
+                        скачать
+                    </button>
+                    <button style={{...styles.iconButton, flex: 1, flexShrink: 0}}>
                         <FaTelegramPlane size={20} color="#fff"/>
                     </button>
-                    <button style={styles.iconButton}>
-                        <IoMdDownload size={20} color="#fff"/>
-                    </button>
-                    <button style={styles.iconButton}>
+                    <button style={{...styles.iconButton, flex: 1, flexShrink: 0,}}>
                         <FaShareAlt size={20} color="#fff"/>
                     </button>
                 </div>
@@ -184,11 +186,14 @@ export default function Page(): React.JSX.Element {
                     name: data.data.name,
                     artist: data.data.beatmaker.pseudonym
                 }]);
-            else if (data.data.status === 401) {
-                setCurIndex(null);
-                // router.push("/(auth)/login");
-            } else
-                alert(data.data.message);
+            else { // @ts-ignore
+                if (data.data.status === 401) {
+                    setCurIndex(null);
+                    // router.push("/(auth)/login");
+                } else { // @ts-ignore
+                    alert(data.data.message);
+                }
+            }
         }
     };
 
@@ -208,26 +213,28 @@ export default function Page(): React.JSX.Element {
             direction={"vertical"}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}>
-            <SwiperSlide>{Item(1, {
-                id: "1",
-                name: "lolkek",
-                artist: "cheburek",
-                image: "https://example.com/path-to-image.jpg",
-            }, isPaused, setIsPaused)}</SwiperSlide>
-            {/* <SwiperSlide>{Item(1, {
-                id: "1",
-                name: "lolkek",
-                artist: "cheburek"
-            }, isPaused, setIsPaused)}</SwiperSlide>
-            <SwiperSlide>{Item(1, {
-                id: "1",
-                name: "lolkek",
-                artist: "cheburek"
-            }, isPaused, setIsPaused)}</SwiperSlide> */}
-            {/*<SwiperSlide>{Item(1, {id: "2"}, isPaused, setIsPaused)}</SwiperSlide>*/}
-            {/*<SwiperSlide>{Item(1, {id: "3"}, isPaused, setIsPaused)}</SwiperSlide>*/}
-            {/*<SwiperSlide>{Item(1, {id: "4"}, isPaused, setIsPaused)}</SwiperSlide>*/}
-            {/*<SwiperSlide>{Item(1, {id: "5"}, isPaused, setIsPaused)}</SwiperSlide>*/}
+
+            <SwiperSlide>
+                <BeatCard title={"lolkek"} author={"cheburek"} coverImage={"path/to/img"} tags={[]}/>
+            </SwiperSlide>
+            {/*<SwiperSlide>{Item(1, {*/}
+            {/*    id: "3",*/}
+            {/*    name: "lolkek",*/}
+            {/*    artist: "cheburek",*/}
+            {/*    image: "https://example.com/path-to-image.jpg",*/}
+            {/*}, isPaused, setIsPaused)}</SwiperSlide>*/}
+            {/*<SwiperSlide>{Item(1, {*/}
+            {/*    id: "4",*/}
+            {/*    name: "lolkek",*/}
+            {/*    artist: "cheburek",*/}
+            {/*    image: "https://example.com/path-to-image.jpg",*/}
+            {/*}, isPaused, setIsPaused)}</SwiperSlide>*/}
+            {/*<SwiperSlide>{Item(1, {*/}
+            {/*    id: "5",*/}
+            {/*    name: "lolkek",*/}
+            {/*    artist: "cheburek",*/}
+            {/*    image: "https://example.com/path-to-image.jpg",*/}
+            {/*}, isPaused, setIsPaused)}</SwiperSlide>*/}
         </Swiper>
     );
 }
@@ -264,20 +271,24 @@ const styles = {
     },
     footer: {
         display: "flex",
-        justifyContent: "space-evenly",
+        justifyContent: "center",
         alignItems: "center",
         alignSelf: "center",
-        width: "100%",
+        width: "80%",
         marginTop: 20,
         marginBottom: 20,
     },
     iconButton: {
+        display: "flex",
+        color: "white",
         backgroundColor: "#1a1a1a",
-        borderRadius: "40%",
+        // borderRadius: "100%",
         minWidth: 40,
         minHeight: 40,
-        width: 55,
-        height: 55,
+        padding: 0,
+        margin: '8px',
+        // width: 45,
+        // height: 50,
         justifyContent: "center",
         alignItems: "center",
         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
