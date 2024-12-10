@@ -4,6 +4,7 @@
     border-radius: 50px;
     overflow: hidden;
     position: relative;
+    height: 100%;
     aspect-ratio: 0.686;
     max-width: 343px;
     border: 2px solid rgba(84, 84, 86, 0.34);
@@ -22,6 +23,7 @@
     position: relative;
     border-radius: 50px;
     display: flex;
+    height: 100%;
     width: 100%;
     flex-direction: column;
     overflow: hidden;
@@ -78,4 +80,6 @@
     gap: 10px;
     justify-content: center;
     padding: 0 25px 25px;
+    position: absolute;
+    bottom: 0;
 }
