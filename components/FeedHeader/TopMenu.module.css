@@ -12,7 +12,6 @@
     text-align: center;
     justify-content: space-evenly;
     width: 100%;
-    padding: 10px 0 0 16px;
     box-shadow: 0 45px 25px rgba(0, 0, 0, 0.8);
     font: 400 18px/1 ALS Gorizont, -apple-system, Roboto, Helvetica, sans-serif;
     overflow: hidden;
@@ -45,7 +44,9 @@
 .topMenuWrapper {
     max-width: 600px;
     width: 80vw;
+    margin: auto;
     display: flex;
+    align-items: center;
     justify-content: space-evenly;
     align-self: center;
 }

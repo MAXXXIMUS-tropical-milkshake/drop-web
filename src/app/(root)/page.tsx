@@ -4,7 +4,6 @@ import {AudioRepository} from "@/repositories/AudioRepository";
 import {Middleware} from "@/repositories/Middleware";
 import {useSession} from "@/context/AuthContext";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {FaTelegramPlane, FaPlay, FaShareAlt, FaPause} from "react-icons/fa";
 import {BeatCard} from "@/components/BeatCard/BeatCard";
 
 type Card = {
@@ -153,60 +152,3 @@ export default function Page(): React.JSX.Element {
         </Swiper>
     );
 }
-const styles = {
-    button: {
-        backgroundColor: "#007BFF",
-        padding: 10,
-        margin: 5,
-        borderRadius: 5,
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    trackTitle: {
-        fontSize: 30,
-        margin: 10,
-        fontWeight: "700",
-        color: "#000",
-    },
-    artistName: {
-        fontSize: 25,
-        margin: 10,
-        color: "#555",
-        fontWeight: "500",
-        marginTop: 5,
-    },
-    pauseButton: {
-        padding: 10,
-        width: "5vmax",
-        height: "5vmax",
-        borderRadius: "100%",
-        backgroundColor: "rgba(255, 255, 255, 0.3)",
-        border: "none",
-    },
-    footer: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        alignSelf: "center",
-        width: "80%",
-        marginTop: 20,
-        marginBottom: 20,
-    },
-    iconButton: {
-        display: "flex",
-        color: "white",
-        backgroundColor: "#1a1a1a",
-        // borderRadius: "100%",
-        minWidth: 40,
-        minHeight: 40,
-        padding: 0,
-        margin: '8px',
-        // width: 45,
-        // height: 50,
-        justifyContent: "center",
-        alignItems: "center",
-        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
-        border: "none",
-    },
-};
