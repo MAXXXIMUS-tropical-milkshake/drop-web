@@ -15,16 +15,21 @@ type Card = {
 
 export default function Page(): React.JSX.Element {
     const [it, setIt] = useState<Card[]>([]);
+    const [player, setPlayer] = useState<HTMLAudioElement>(null);
 
-    // const player = useAudioPlayer("");
-    // const router = useRouter();
+    useEffect(() => {
+        const element = document.getElementById("feedAudio") as HTMLAudioElement;
+        if (element) {
+            setPlayer(element);
+        }
+    }, []);
     const {isLoading, accessToken, refreshToken, refresh} = useSession();
 
     const [trackID, setTrackID] = React.useState<string | null>(null);
     const [curIndex, setCurIndex] = React.useState<number | null>(null);
 
     useEffect(() => {
-        if (!accessToken || !refreshToken) return;
+        // if (!accessToken || !refreshToken) return;
 
         const preload = async () => {
             const card1 = await Middleware.withRefreshToken(
@@ -57,16 +62,17 @@ export default function Page(): React.JSX.Element {
             // router.push("/(auth)/login");
         };
 
-        preload().catch((e) => console.error(e));
+        preload().catch((e) => console.error(e)).finally(() => console.log("preload finally"));
     }, [isLoading]);
 
     useEffect(() => {
         const play = async () => {
             if (!trackID) return;
-            // player?.pause();
-            const url = `http://localhost:8083/v1/audio/${trackID}/stream`;
-            // player?.replace({ uri: url });
-            // player?.play();
+            player?.pause();
+            const url = `https://51.250.43.113:30020/v1/audio/${trackID}/stream`;
+            if (player != null)
+                player.src = url;
+            player.play();
             console.log("playing");
         };
 
@@ -75,15 +81,14 @@ export default function Page(): React.JSX.Element {
 
     const [isPaused, setIsPaused] = React.useState(true);
     useEffect(() => {
-        // if (isPaused) player?.pause();
-        // else player?.play();
+        if (isPaused) player?.pause();
+        else player?.play();
     }, [isPaused])
 
     const onSnapToItem = async (index: number) => {
-        if (!accessToken || !refreshToken) {
-            return;
-        }
-
+        // if (!accessToken || !refreshToken) {
+        //     return;
+        // }
         setTrackID(it[index].id);
         setCurIndex(index);
         setIsPaused(false);
@@ -130,25 +135,12 @@ export default function Page(): React.JSX.Element {
             direction={"vertical"}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}>
-
-            <SwiperSlide>
-                <BeatCard title={"lolkek"} author={"cheburek"} coverImage={"path/to/img"} tags={[
-                    {type: "primary", label: "lol", value: "kek"},
-                    {type: "secondary", label: "lol", value: "kek"}
+            {it.map((item, i) => (<SwiperSlide>
+                <BeatCard title={item.name} author={item.artist} coverImage={"path/to/img"} tags={[
+                    {type: "primary", label: "hard", value: "coded"},
+                    {type: "secondary", label: "im", value: "cooked"}
                 ]}/>
-            </SwiperSlide>
-            <SwiperSlide>
-                <BeatCard title={"lolkek"} author={"cheburek"} coverImage={"path/to/img"} tags={[
-                    {type: "primary", label: "lol", value: "kek"},
-                    {type: "secondary", label: "lol", value: "kek"}
-                ]}/>
-            </SwiperSlide>
-            <SwiperSlide>
-                <BeatCard title={"lolkek"} author={"cheburek"} coverImage={"path/to/img"} tags={[
-                    {type: "primary", label: "lol", value: "kek"},
-                    {type: "secondary", label: "lol", value: "kek"}
-                ]}/>
-            </SwiperSlide>
+            </SwiperSlide>))}
         </Swiper>
     );
 }

@@ -30,5 +30,6 @@ export const RibbonControls: React.FC = () => {
                 />
             ))}
         </div>
+
     );
 };
