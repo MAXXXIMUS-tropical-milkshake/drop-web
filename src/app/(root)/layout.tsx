@@ -7,7 +7,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" style={{height: "100vh", width: "100%"}}>
+        <html lang="en" style={{height: "100%", width: "100%", overflow: "hidden"}}>
         <body
             style={{
                 height: "100%",

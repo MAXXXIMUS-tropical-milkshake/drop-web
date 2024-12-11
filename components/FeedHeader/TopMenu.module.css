@@ -5,18 +5,40 @@
     left: 0;
     align-items: center;
     gap: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 100;
+    white-space: nowrap;
+    text-align: center;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 10px 0 0 16px;
+    box-shadow: 0 45px 25px rgba(0, 0, 0, 0.8);
+    font: 400 18px/1 ALS Gorizont, -apple-system, Roboto, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+.topMenuMobile {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    gap: 10px;
     background-color: rgba(0, 0, 0, 0.65);
     color: white;
     z-index: 100;
     white-space: nowrap;
     text-align: center;
-    overflow: hidden;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 100%;
-    padding: 10px 0 0 16px;
     box-shadow: 0 40px 20px rgba(0, 0, 0, 0.65);
     font: 400 18px/1 ALS Gorizont, -apple-system, Roboto, Helvetica, sans-serif;
-    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.topMenuMobile::-webkit-scrollbar {
+    display: none;
 }
 
 .topMenuWrapper {
@@ -25,6 +47,15 @@
     display: flex;
     justify-content: space-evenly;
     align-self: center;
+}
+.topMenuWrapperMobile {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+    margin: 10px;
 }
 
 .menuButton, .menuButtonInactive {
@@ -36,6 +67,7 @@
     backdrop-filter: blur(15px);
     display: flex;
     min-height: 50px;
+    min-width: 80px;
     gap: 10px;
     overflow: hidden;
     padding: 0 20px;

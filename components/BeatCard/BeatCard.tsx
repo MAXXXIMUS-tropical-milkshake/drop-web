@@ -14,7 +14,6 @@ export const BeatCard: React.FC<BeatCardProps> = ({
         <div className={styles.container}>
             <img
                 src={coverImage}
-                alt={`Cover for ${title} by ${author}`}
                 className={styles.coverImage}
             />
             <div className={styles.content}>
@@ -22,9 +21,6 @@ export const BeatCard: React.FC<BeatCardProps> = ({
                     <div className={styles.header}>
                         <div className={styles.titleWrapper}>
                             <span>{title}</span>
-                            <img
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/00de7dab9b32aa7b051a0f0f3da70cdf96474c1110e76f5369b9d37260f54a9a?placeholderIfAbsent=true&apiKey=cd0c24fbc07b479a9c731c75ac6f5d6c"
-                                alt=""/>
                         </div>
                         <div className={styles.author}>{author}</div>
                     </div>

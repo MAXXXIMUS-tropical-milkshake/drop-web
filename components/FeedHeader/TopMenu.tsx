@@ -1,4 +1,6 @@
-import React from 'react';
+'use client'
+import React, {useEffect} from 'react';
+import {useDeviceSize} from '@/hooks/useDeviceSize';
 import {MenuButton} from '@/components/FeedHeader/MenuButton';
 import styles from './TopMenu.module.css';
 
@@ -19,6 +21,11 @@ const menuItems = [
 ];
 
 export const TopMenu: React.FC = () => {
+    const isMobile = useDeviceSize()[0] < 600;
+    return (isMobile ? TopMenuMobile({}) : TopMenuDesktop({}));
+
+};
+const TopMenuDesktop: React.FC = () => {
     return (
         <nav className={styles.topMenu}>
             <div className={styles.topMenuWrapper}>
@@ -31,6 +38,20 @@ export const TopMenu: React.FC = () => {
                     />
                 ))}
             </div>
-        </nav>
-    );
-};
+        </nav>);
+}
+const TopMenuMobile: React.FC = () => {
+    return (
+        <nav className={styles.topMenuMobile}>
+            <div className={styles.topMenuWrapperMobile}>
+                {menuItems.map((item, index) => (
+                    <MenuButton
+                        key={index}
+                        icon={item.icon}
+                        label={item.label}
+                        isActive={item.isActive}
+                    />
+                ))}
+            </div>
+        </nav>);
+}
