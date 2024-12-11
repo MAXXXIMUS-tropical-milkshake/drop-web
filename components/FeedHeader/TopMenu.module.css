@@ -19,6 +19,7 @@
 }
 
 .topMenuMobile {
+    scrollbar-width: none;
     display: flex;
     position: fixed;
     top: 0;
@@ -48,6 +49,7 @@
     justify-content: space-evenly;
     align-self: center;
 }
+
 .topMenuWrapperMobile {
     display: flex;
     width: 100%;

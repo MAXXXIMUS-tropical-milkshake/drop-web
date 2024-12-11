@@ -10,6 +10,7 @@ export default function RootLayout({
         <html lang="en" style={{height: "100%", width: "100%", overflow: "hidden"}}>
         <body
             style={{
+                scrollbarWidth: "none",
                 height: "100%",
                 width: "100%",
                 overflow: "hidden",
