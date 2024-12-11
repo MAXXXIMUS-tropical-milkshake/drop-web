@@ -9,6 +9,7 @@ export interface BeatCardProps {
     author: string;
     coverImage: string;
     tags: TagProps[];
+    useShimmer: boolean;
 }
 
 export interface ActionButtonProps {

@@ -135,12 +135,16 @@ export default function Page(): React.JSX.Element {
             direction={"vertical"}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}>
-            {it.map((item, i) => (<SwiperSlide>
-                <BeatCard title={item.name} author={item.artist} coverImage={"path/to/img"} tags={[
-                    {type: "primary", label: "hard", value: "coded"},
-                    {type: "secondary", label: "im", value: "cooked"}
-                ]}/>
-            </SwiperSlide>))}
+            {it.length == 0 ?
+                <SwiperSlide>
+                    <BeatCard title={" "} author={" "} coverImage={" "} tags={[]} useShimmer={true}/>
+                </SwiperSlide>
+                : it.map((item, i) => (<SwiperSlide>
+                    <BeatCard title={item.name} author={item.artist} coverImage={"path/to/img"} tags={[
+                        {type: "primary", label: "hard", value: "coded"},
+                        {type: "secondary", label: "im", value: "cooked"}
+                    ]} useShimmer={false}/>
+                </SwiperSlide>))}
         </Swiper>
     );
 }

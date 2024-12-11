@@ -8,16 +8,14 @@ export const BeatCard: React.FC<BeatCardProps> = ({
                                                       title,
                                                       author,
                                                       coverImage,
-                                                      tags
+                                                      tags,
+                                                      useShimmer = false
                                                   }) => {
     return (
         <div className={styles.container}>
-            <img
-                src={coverImage}
-                className={styles.coverImage}
-            />
+            {!useShimmer ? <img src={coverImage} className={styles.coverImage}/> : null}
             <div className={styles.content}>
-                <div className={styles.info}>
+                <div className={styles.info || useShimmer ? styles.shimmer : null}>
                     <div className={styles.header}>
                         <div className={styles.titleWrapper}>
                             <span>{title}</span>
