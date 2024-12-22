@@ -6,6 +6,7 @@ export interface TagProps {
 
 export interface BeatCardProps {
     title: string;
+    audioUrl: string;
     author: string;
     coverImage: string;
     tags: TagProps[];

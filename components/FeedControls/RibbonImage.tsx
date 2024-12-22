@@ -1,14 +1,13 @@
 import React from 'react';
-import styles from './RibbonControls.module.css';
-import {ImageProps} from './types';
 
-export const RibbonImage: React.FC<ImageProps> = ({src, alt, className}) => {
+export const RibbonImage = ({src, alt, className, onClick}): React.JSX.Element => {
     return (
         <img
             loading="lazy"
             src={src}
             alt={alt}
             className={className}
+            onClick={onClick}
         />
     );
 };

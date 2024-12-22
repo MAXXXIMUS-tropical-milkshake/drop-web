@@ -75,8 +75,12 @@
 
 .author {
     color: #8e8e93;
-    font-size: 16px;
     margin-top: 5px;
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.1em;
 }
 
 .tags {

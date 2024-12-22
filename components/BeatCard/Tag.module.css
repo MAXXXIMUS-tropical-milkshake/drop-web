@@ -18,6 +18,10 @@
     color: #aeaeb2;
     font-weight: 400;
     line-height: 2;
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 1em;
 }
 
 .value {
@@ -28,6 +32,10 @@
     gap: 3px;
     color: #fff;
     font-weight: 900;
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 1em;
     line-height: 1;
 }
 

@@ -1,123 +1,102 @@
-"use client";
-import React, {useEffect, useState} from "react";
-import {AudioRepository} from "@/repositories/AudioRepository";
-import {Middleware} from "@/repositories/Middleware";
-import {useSession} from "@/context/AuthContext";
-import {Swiper, SwiperSlide} from "swiper/react";
+"use client"
+import React, {useContext, useEffect, useState} from "react";
 import {BeatCard} from "@/components/BeatCard/BeatCard";
+import {FeedIsPlayingContext} from "@/context/FeedIsPlayingContext";
+import {Swiper, SwiperSlide} from "swiper/react";
 
 type Card = {
     index: number;
     id: string;
     name: string;
     artist: string;
+    audioUrl: string;
+    imgUrl: string;
 };
-
+type PredefCard = {
+    it: number;
+    audioUrl: string;
+    imgUrl: string;
+}
+const downloadPrefix = "https://dl.dropboxusercontent.com/";
 export default function Page(): React.JSX.Element {
-    const [it, setIt] = useState<Card[]>([]);
+
+    const predefItems: PredefCard[] = [
+        {
+            it: 0,
+            audioUrl: "scl/fi/cy77j3p99tfzlktjugpp8/1.mp3?rlkey=j5mz0c3vigrr5ap05vvcgxe0m&st=zdvl9iq1&dl=0",
+            imgUrl: "https://i.ibb.co/vvnsP3b/ey-Jid-WNr-ZXQi-Oi-Jid-HMt-Y29ud-GVud-CIs-Imtle-SI6-In-Vz-ZXJz-L3-Byb2-Qv-Mj-A2-MDQy-NC9pb-WFn-ZS9-K.webp"
+        },
+        {
+            it: 1,
+            audioUrl: "scl/fi/zcnbe44wsn1qf3mhude3e/2.mp3?rlkey=w2g1df3xuwekmdufpk5s5r1my&st=dgy1ft59&dl=0",
+            imgUrl: "https://i.ibb.co/TBW39K8/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Ey-Nj-Iy.webp"
+        },
+        {
+            it: 2,
+            audioUrl: "scl/fi/hm15xso7otgbu5ejuud99/3.mp3?rlkey=uzehc72rr2fph9cfsrsqx55et&st=e7gb9kha&dl=0",
+            imgUrl: "https://i.ibb.co/LPbMcfw/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Ex-Mz-U2.webp"
+        },
+        {
+            it: 3,
+            audioUrl: "scl/fi/dx9stdqleawve8rz4o59q/4.mp3?rlkey=d4sdzgmc07fvfqfrpctgx69fq&st=1s75uz2w&dl=0",
+            imgUrl: "https://i.ibb.co/2vMqNQP/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-E2-Mj-Ix.webp",
+        },
+        {
+            it: 4,
+            audioUrl: "scl/fi/s72815jwk7g376v5zh4mj/5.mp3?rlkey=ggjyk4n0e11fpny8bye1c4rob&st=yyj8qiua&dl=0",
+            imgUrl: "https://i.ibb.co/ctfRJdd/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-NDg0.webp",
+        },
+        {
+            it: 5,
+            audioUrl: "scl/fi/xfm2ox9xy1vvxr09q1a0c/6.mp3?rlkey=pvyqpepa7n0vrzcda55hr0qss&st=cu1xwegu&dl=0",
+            imgUrl: "https://i.ibb.co/gTqPR2x/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-E4-Nz-Uw.webp"
+        },
+        {
+            it: 6,
+            audioUrl: "scl/fi/va4be2azearjf5xmg3iqj/7.mp3?rlkey=52gjksdwhr532e9iibdzu3pug&st=73uu7d12&dl=0",
+            imgUrl: "https://i.ibb.co/pJWFkQ3/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-NDEy.webp"
+        },
+        {
+            it: 7,
+            audioUrl: "scl/fi/gqy45ogrremnxwfbbu0fs/8.mp3?rlkey=9movgn1s49ild6cqi667rgavs&st=dykowy9l&dl=0",
+            imgUrl: "https://i.ibb.co/M8S6QBW/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-NTE4.webp"
+        },
+        {
+            it: 8,
+            audioUrl: "scl/fi/j5ug6tg97e4oe7dfhceds/9.mp3?rlkey=22143lgupeja1frs0ha9hqbq8&st=5i1nab61&dl=0",
+            imgUrl: "https://i.ibb.co/KDH4hNm/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-OTQx.webp"
+        },
+        {
+            it: 9,
+            audioUrl: "scl/fi/3kb8kl44rz3ssc8bijwao/9.mp3?rlkey=qld6p76unlm8di41og43zk304&st=6f49f4ne&dl=0",
+            imgUrl: "https://i.ibb.co/HVgdLkr/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-OTYx.webp"
+        }
+    ].sort(() => Math.random() - 0.5);
+
+    const [it, setIt] = useState<Card[]>(predefItems.map((p) => {
+        return {
+            index: (p.it + 1),
+            id: (p.it + 1).toString(),
+            name: "beat " + (p.it + 1).toString(),
+            artist: "beatmaker " + (p.it + 1).toString(),
+            audioUrl: downloadPrefix + p.audioUrl,
+            imgUrl: p.imgUrl,
+        };
+
+    }));
     const [player, setPlayer] = useState<HTMLAudioElement>(null);
+    const {isPlaying, setIsPlaying} = useContext(FeedIsPlayingContext);
 
     useEffect(() => {
         const element = document.getElementById("feedAudio") as HTMLAudioElement;
         if (element) {
             setPlayer(element);
+            element.src = it[0].audioUrl;
+            console.log("player set");
+        } else {
+            console.log("player not set");
         }
     }, []);
-    const {isLoading, accessToken, refreshToken, refresh} = useSession();
-
-    const [trackID, setTrackID] = React.useState<string | null>(null);
-    const [curIndex, setCurIndex] = React.useState<number | null>(null);
-
-    useEffect(() => {
-        // if (!accessToken || !refreshToken) return;
-
-        const preload = async () => {
-            const card1 = await Middleware.withRefreshToken(
-                {
-                    accessToken: accessToken,
-                    refresh: refresh,
-                    refreshToken: refreshToken,
-                },
-                AudioRepository.feed,
-            );
-            const card2 = await Middleware.withRefreshToken(
-                {
-                    accessToken: accessToken,
-                    refresh: refresh,
-                    refreshToken: refreshToken,
-                },
-                AudioRepository.feed,
-            );
-
-            if (card1.success && card2.success) {
-                setTrackID(card1.data.id);
-                setIsPaused(false);
-                setCurIndex(0);
-                setIt([{index: 0, id: card1.data.id, name: card1.data.name, artist: card1.data.beatmaker.pseudonym},
-                    {index: 1, id: card2.data.id, name: card2.data.name, artist: card2.data.beatmaker.pseudonym}]);
-                return;
-            }
-
-            setCurIndex(null);
-            // router.push("/(auth)/login");
-        };
-
-        preload().catch((e) => console.error(e)).finally(() => console.log("preload finally"));
-    }, [isLoading]);
-
-    useEffect(() => {
-        const play = async () => {
-            if (!trackID) return;
-            player?.pause();
-            const url = `https://51.250.43.113:30020/v1/audio/${trackID}/stream`;
-            if (player != null)
-                player.src = url;
-            player.play();
-            console.log("playing");
-        };
-
-        play().catch((e) => console.error(e));
-    }, [curIndex, isLoading]);
-
-    const [isPaused, setIsPaused] = React.useState(true);
-    useEffect(() => {
-        if (isPaused) player?.pause();
-        else player?.play();
-    }, [isPaused])
-
-    const onSnapToItem = async (index: number) => {
-        // if (!accessToken || !refreshToken) {
-        //     return;
-        // }
-        setTrackID(it[index].id);
-        setCurIndex(index);
-        setIsPaused(false);
-        if (index === it.length - 1) {
-            const data = await Middleware.withRefreshToken(
-                {
-                    accessToken: accessToken,
-                    refresh: refresh,
-                    refreshToken: refreshToken,
-                },
-                AudioRepository.feed,
-            );
-            if (data.success)
-                setIt((prev) => [...prev, {
-                    index: it.length,
-                    id: data.data.id,
-                    name: data.data.name,
-                    artist: data.data.beatmaker.pseudonym
-                }]);
-            else { // @ts-ignore
-                if (data.data.status === 401) {
-                    setCurIndex(null);
-                    // router.push("/(auth)/login");
-                } else { // @ts-ignore
-                    alert(data.data.message);
-                }
-            }
-        }
-    };
 
     return (
         <Swiper
@@ -133,18 +112,29 @@ export default function Page(): React.JSX.Element {
             spaceBetween={50}
             centeredSlides={true}
             direction={"vertical"}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}>
-            {it.length == 0 ?
-                <SwiperSlide>
-                    <BeatCard title={" "} author={" "} coverImage={" "} tags={[]} useShimmer={true}/>
+            loop={true}
+            initialSlide={0}
+            onRealIndexChange={async (swiper) => {
+                if (player != null) {
+                    console.log(swiper.realIndex);
+                    player.src = it[swiper.realIndex].audioUrl;
+
+                    await player.play().then(() => {
+                        setIsPlaying(true);
+                    });
+                }
+            }}>
+            {it.map((item, i) => (
+                <SwiperSlide key={i} virtualIndex={i}>
+                    <BeatCard title={item.name} author={item.artist} audioUrl={item.audioUrl}
+                              coverImage={item.imgUrl}
+                              tags={[
+                                  {type: "primary", label: "hard", value: "coded"},
+                                  {type: "secondary", label: "im", value: "cooked"}
+                              ]} useShimmer={false} key={i}/>
                 </SwiperSlide>
-                : it.map((item, i) => (<SwiperSlide>
-                    <BeatCard title={item.name} author={item.artist} coverImage={"path/to/img"} tags={[
-                        {type: "primary", label: "hard", value: "coded"},
-                        {type: "secondary", label: "im", value: "cooked"}
-                    ]} useShimmer={false}/>
-                </SwiperSlide>))}
+            ))}
+
         </Swiper>
     );
 }

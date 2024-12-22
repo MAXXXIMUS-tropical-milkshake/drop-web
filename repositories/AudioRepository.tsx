@@ -1,6 +1,6 @@
 import {Result} from "./Response";
 
-const baseURL = 'http://51.250.43.113:30020';
+const baseURL = 'https://dropp.petrukhinandrew.ru:30020';
 
 
 export type FeedResponse = {
@@ -21,8 +21,10 @@ export class AudioRepository {
     static async feed(token: string): Promise<Result<FeedResponse>> {
         const response = await fetch(`${baseURL}/v1/feed/audio`, {
             method: "GET",
+            mode: "no-cors",
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
                 Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MX0.tjVEMiS5O2yNzclwLdaZ-FuzrhyqOT7UwM9Hfc0ZQ8Q",
             },
         });
