@@ -59,9 +59,9 @@ export default function RootLayout({
             backgroundImage: "radial-gradient(farthest-corner at 30% 60%, rgba(63,94,251,1) 0%, rgba(177,12,186,0.7959558823529411) 10%, rgba(207,47,127,1) 20%, rgba(0,0,0,1) 50%",
         }}>
 
-        <TelegramProvider>
+        {/* <TelegramProvider> */}
             <RootWithNoTgProvider children={children}/>
-        </TelegramProvider>
+        {/* </TelegramProvider> */}
         </body>
         </html>
     );
@@ -70,7 +70,7 @@ export default function RootLayout({
 const RootWithNoTgProvider = ({children}) => {
     const {user, webApp} = useTelegram();
     console.log("user " + user);
-    return (user !== undefined ? (
+    return (user == undefined ? (
                 <FeedIsPlayingProvider>
                     <SessionProvider>
                         {TopMenu({})}
