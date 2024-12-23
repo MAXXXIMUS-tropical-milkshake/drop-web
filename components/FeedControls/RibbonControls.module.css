@@ -1,0 +1,43 @@
+.ribbonControls {
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 50px;
+    align-self: center;
+    border: 1px solid rgba(84, 84, 86, 0.34);
+    background: linear-gradient(0deg, #3d3d3d 0%, #3d3d3d 100%), rgba(127, 127, 127, 0.5);
+    background-blend-mode: overlay, luminosity;
+    box-shadow: 0px 20px 50px 0px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(50px);
+    display: flex;
+    position: fixed;
+    bottom: 5vh;
+    left: 0;
+    right: 0;
+    margin: 5px auto;
+    min-width: 60px;
+    max-width: 150px;
+    width: 25vw;
+    height: 7vh;
+    gap: 20px;
+    padding: 5px 20px;
+    z-index: 101;
+}
+
+.controlImage {
+    aspect-ratio: 1;
+    color: white;
+    object-position: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 0;
+}
+
+.separator {
+    aspect-ratio: 0.03;
+    object-fit: contain;
+    object-position: center;
+    width: 2px;
+    align-self: stretch;
+    stroke-width: 1px;
+    stroke: rgba(84, 84, 86, 0.34);
+}

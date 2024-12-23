@@ -1,196 +1,167 @@
-"use client";
+"use client"
 import React, {useContext, useEffect, useState} from "react";
-import TrackForm from "@/components/TrackForm/TrackForm";
-import {AudioRepository} from "@/repositories/AudioRepository";
-import {Middleware} from "@/repositories/Middleware";
-import {useSession} from "@/context/AuthContext";
-import {useRouter} from "next/router";
+import {BeatCard} from "@/components/BeatCard/BeatCard";
+import {FeedIsPlayingContext} from "@/context/FeedIsPlayingContext";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {FaTelegramPlane, FaPlay, FaShareAlt, FaPause} from "react-icons/fa";
-import {IoMdDownload} from "react-icons/io";
-import Image from "next/image";
+import {TagProps} from "@/components/BeatCard/types";
 
 type Card = {
     index: number;
     id: string;
     name: string;
     artist: string;
+    audioUrl: string;
+    imgUrl: string;
+    tags: TagProps[];
 };
-
-function Item(it: number, {id, name, artist, image}: {
-    id: string, name: string, artist: string, image: string;
-}, isPaused: boolean, setIsPaused: (isPaused: boolean) => void): React.JSX.Element {
-
-    return (
-        <div
-            style={{
-                display: "flex",
-                flex: 1,
-                justifyContent: "flex-end",
-                flexDirection: "column",
-                clipPath: `url(#squircleClip)`,
-                alignSelf: "center",
-                background: "#FF1158",
-                height: "60vh",
-                maxHeight: 1200,
-                width: "25vw",
-                maxWidth: 400,
-                // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-            }}
-            
-        >
-
-            {/* <div style={{ flex: 1, position: "relative" }}>
-                <Image
-                    src={image || "https://example.com/default-image.jpg"}
-                    alt="Beat cover"
-                    // layout="fill"
-                    objectFit="cover"
-                />
-            </div> */}
-
-            <div style={{visibility: "hidden", flex: 1}}></div>
-
-            <button
-                style={{...styles.pauseButton, margin: "auto", justifyContent: "center"}}
-                onClick={() => setIsPaused(!isPaused)}
-            >
-                {isPaused ? <FaPlay size={27} color="#fff"/> : <FaPause size={27} color="#fff"/>}
-            </button>
-
-            <div style={{flex: 1, flexDirection: "column", display: "flex", justifyContent: "flex-end"}}>
-                <div style={{margin: 20}}>
-                <div>
-                    <span style={styles.trackTitle}>{name || "Untitled"}</span>
-                </div>
-                <div>
-                    <span style={styles.artistName}>{artist || "Unknown Artist"}</span>
-                </div>
-                </div>
-                {/* <audio controls style={{alignSelf: "center"}}/> */}
-                <div style={styles.footer}>
-                    <button style={styles.iconButton}>
-                        <FaTelegramPlane size={20} color="#fff"/>
-                    </button>
-                    <button style={styles.iconButton}>
-                        <IoMdDownload size={20} color="#fff"/>
-                    </button>
-                    <button style={styles.iconButton}>
-                        <FaShareAlt size={20} color="#fff"/>
-                    </button>
-                </div>
-            </div>
-
-            <svg width="1" height="1" viewBox="0 0 1 1" style={{position: "absolute"}} fill="none"
-                 xmlns="http://www.w3.org/2000/svg" display={"hidden"}>
-                <clipPath id="squircleClip" clipPathUnits="objectBoundingBox">
-                    <path d="M 0,0.5
-                C 0,0  0,0  0.5,0
-                  1,0  1,0  1,0.5
-                  1,1  1,1  0.5,1
-                  0,1  0,1  0,0.5"></path>
-                </clipPath>
-            </svg>
-        </div>);
+type PredefCard = {
+    it: number;
+    audioUrl: string;
+    imgUrl: string;
+    tags: TagProps[];
 }
-
+const downloadPrefix = "https://dl.dropboxusercontent.com/";
 export default function Page(): React.JSX.Element {
-    const [it, setIt] = useState<Card[]>([]);
 
-    // const player = useAudioPlayer("");
-    // const router = useRouter();
-    const {isLoading, accessToken, refreshToken, refresh} = useSession();
+    // @ts-ignore
+    const predefItems: PredefCard[] = [
+        {
+            it: 0,
+            audioUrl: "scl/fi/cy77j3p99tfzlktjugpp8/1.mp3?rlkey=j5mz0c3vigrr5ap05vvcgxe0m&st=zdvl9iq1&dl=0",
+            imgUrl: "https://i.ibb.co/vvnsP3b/ey-Jid-WNr-ZXQi-Oi-Jid-HMt-Y29ud-GVud-CIs-Imtle-SI6-In-Vz-ZXJz-L3-Byb2-Qv-Mj-A2-MDQy-NC9pb-WFn-ZS9-K.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "128"},
+                {type: "secondary", label: "жанр", value: "rap"},
+                {type: "secondary", label: "тональность", value: "major"},
+                {type: "secondary", label: "настроение", value: "весёлое"}
+            ]
+        },
+        {
+            it: 1,
+            audioUrl: "scl/fi/zcnbe44wsn1qf3mhude3e/2.mp3?rlkey=w2g1df3xuwekmdufpk5s5r1my&st=dgy1ft59&dl=0",
+            imgUrl: "https://i.ibb.co/TBW39K8/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Ey-Nj-Iy.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "129"},
+                {type: "secondary", label: "жанр", value: "hip-hop"},
+                {type: "secondary", label: "тональность", value: "minor"},
+                {type: "secondary", label: "настроение", value: "грустное"}
+            ]
+        },
+        {
+            it: 2,
+            audioUrl: "scl/fi/hm15xso7otgbu5ejuud99/3.mp3?rlkey=uzehc72rr2fph9cfsrsqx55et&st=e7gb9kha&dl=0",
+            imgUrl: "https://i.ibb.co/LPbMcfw/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Ex-Mz-U2.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "130"},
+                {type: "secondary", label: "жанр", value: "pop"},
+                {type: "secondary", label: "тональность", value: "major"},
+                {type: "secondary", label: "настроение", value: "весёлое"}
+            ]
+        },
+        {
+            it: 3,
+            audioUrl: "scl/fi/dx9stdqleawve8rz4o59q/4.mp3?rlkey=d4sdzgmc07fvfqfrpctgx69fq&st=1s75uz2w&dl=0",
+            imgUrl: "https://i.ibb.co/2vMqNQP/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-E2-Mj-Ix.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "131"},
+                {type: "secondary", label: "жанр", value: "jazz"},
+                {type: "secondary", label: "тональность", value: "major"},
+                {type: "secondary", label: "настроение", value: "весёлое"}
+            ]
+        },
+        {
+            it: 4,
+            audioUrl: "scl/fi/s72815jwk7g376v5zh4mj/5.mp3?rlkey=ggjyk4n0e11fpny8bye1c4rob&st=yyj8qiua&dl=0",
+            imgUrl: "https://i.ibb.co/ctfRJdd/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-NDg0.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "132"},
+                {type: "secondary", label: "жанр", value: "rock"},
+                {type: "secondary", label: "тональность", value: "minor"},
+                {type: "secondary", label: "настроение", value: "грустное"}
+            ]
+        },
+        {
+            it: 5,
+            audioUrl: "scl/fi/xfm2ox9xy1vvxr09q1a0c/6.mp3?rlkey=pvyqpepa7n0vrzcda55hr0qss&st=cu1xwegu&dl=0",
+            imgUrl: "https://i.ibb.co/gTqPR2x/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-E4-Nz-Uw.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "133"},
+                {type: "secondary", label: "жанр", value: "trap"},
+                {type: "secondary", label: "тональность", value: "major"},
+                {type: "secondary", label: "настроение", value: "весёлое"}
+            ]
+        },
+        {
+            it: 6,
+            audioUrl: "scl/fi/va4be2azearjf5xmg3iqj/7.mp3?rlkey=52gjksdwhr532e9iibdzu3pug&st=73uu7d12&dl=0",
+            imgUrl: "https://i.ibb.co/pJWFkQ3/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-NDEy.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "134"},
+                {type: "secondary", label: "жанр", value: "electronic"},
+                {type: "secondary", label: "тональность", value: "major"},
+                {type: "secondary", label: "настроение", value: "весёлое"}
+            ]
+        },
+        {
+            it: 7,
+            audioUrl: "scl/fi/gqy45ogrremnxwfbbu0fs/8.mp3?rlkey=9movgn1s49ild6cqi667rgavs&st=dykowy9l&dl=0",
+            imgUrl: "https://i.ibb.co/M8S6QBW/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-NTE4.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "135"},
+                {type: "secondary", label: "жанр", value: "disco"},
+                {type: "secondary", label: "тональность", value: "minor"},
+                {type: "secondary", label: "настроение", value: "грустное"}
+            ]
+        },
+        {
+            it: 8,
+            audioUrl: "scl/fi/j5ug6tg97e4oe7dfhceds/9.mp3?rlkey=22143lgupeja1frs0ha9hqbq8&st=5i1nab61&dl=0",
+            imgUrl: "https://i.ibb.co/KDH4hNm/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-OTQx.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "136"},
+                {type: "secondary", label: "жанр", value: "rap"},
+                {type: "secondary", label: "тональность", value: "major"},
+                {type: "secondary", label: "настроение", value: "весёлое"}
+            ]
+        },
+        {
+            it: 9,
+            audioUrl: "scl/fi/3kb8kl44rz3ssc8bijwao/9.mp3?rlkey=qld6p76unlm8di41og43zk304&st=6f49f4ne&dl=0",
+            imgUrl: "https://i.ibb.co/HVgdLkr/ey-Jid-WNr-ZXQi-Oi-Jwcm9k-LWJ0cy10cm-Fjay-Is-Imtle-SI6-In-Byb2-Qvd-HJh-Y2sv-YXJ0d29yay9-USz-Iw-OTYx.webp",
+            tags: [
+                {type: "primary", label: "темп", value: "137"},
+                {type: "secondary", label: "жанр", value: "hip-hop"},
+                {type: "secondary", label: "тональность", value: "major"},
+                {type: "secondary", label: "настроение", value: "весёлое"}
+            ]
+        }
+    ].sort(() => Math.random() - 0.5);
 
-    const [trackID, setTrackID] = React.useState<string | null>(null);
-    const [curIndex, setCurIndex] = React.useState<number | null>(null);
-
-    useEffect(() => {
-        if (!accessToken || !refreshToken) return;
-
-        const preload = async () => {
-            const card1 = await Middleware.withRefreshToken(
-                {
-                    accessToken: accessToken,
-                    refresh: refresh,
-                    refreshToken: refreshToken,
-                },
-                AudioRepository.feed,
-            );
-            const card2 = await Middleware.withRefreshToken(
-                {
-                    accessToken: accessToken,
-                    refresh: refresh,
-                    refreshToken: refreshToken,
-                },
-                AudioRepository.feed,
-            );
-
-            if (card1.success && card2.success) {
-                setTrackID(card1.data.id);
-                setIsPaused(false);
-                setCurIndex(0);
-                setIt([{index: 0, id: card1.data.id, name: card1.data.name, artist: card1.data.beatmaker.pseudonym},
-                    {index: 1, id: card2.data.id, name: card2.data.name, artist: card2.data.beatmaker.pseudonym}]);
-                return;
-            }
-
-            setCurIndex(null);
-            // router.push("/(auth)/login");
+    const [it, setIt] = useState<Card[]>(predefItems.map((p) => {
+        return {
+            index: (p.it + 1),
+            id: (p.it + 1).toString(),
+            name: "beat " + (p.it + 1).toString(),
+            artist: "beatmaker " + (p.it + 1).toString(),
+            audioUrl: downloadPrefix + p.audioUrl,
+            imgUrl: p.imgUrl,
+            tags: p.tags,
         };
 
-        preload().catch((e) => console.error(e));
-    }, [isLoading]);
+    }));
+    const [player, setPlayer] = useState<HTMLAudioElement>(null);
+    const {isPlaying, setIsPlaying} = useContext(FeedIsPlayingContext);
 
     useEffect(() => {
-        const play = async () => {
-            if (!trackID) return;
-            // player?.pause();
-            const url = `http://localhost:8083/v1/audio/${trackID}/stream`;
-            // player?.replace({ uri: url });
-            // player?.play();
-            console.log("playing");
-        };
-
-        play().catch((e) => console.error(e));
-    }, [curIndex, isLoading]);
-
-    const [isPaused, setIsPaused] = React.useState(true);
-    useEffect(() => {
-        // if (isPaused) player?.pause();
-        // else player?.play();
-    }, [isPaused])
-
-    const onSnapToItem = async (index: number) => {
-        if (!accessToken || !refreshToken) {
-            return;
+        const element = document.getElementById("feedAudio") as HTMLAudioElement;
+        if (element) {
+            setPlayer(element);
+            element.src = it[0].audioUrl;
+            console.log("player set");
+        } else {
+            console.log("player not set");
         }
-
-        setTrackID(it[index].id);
-        setCurIndex(index);
-        setIsPaused(false);
-        if (index === it.length - 1) {
-            const data = await Middleware.withRefreshToken(
-                {
-                    accessToken: accessToken,
-                    refresh: refresh,
-                    refreshToken: refreshToken,
-                },
-                AudioRepository.feed,
-            );
-            if (data.success)
-                setIt((prev) => [...prev, {
-                    index: it.length,
-                    id: data.data.id,
-                    name: data.data.name,
-                    artist: data.data.beatmaker.pseudonym
-                }]);
-            else if (data.data.status === 401) {
-                setCurIndex(null);
-                // router.push("/(auth)/login");
-            } else
-                alert(data.data.message);
-        }
-    };
+    }, []);
 
     return (
         <Swiper
@@ -202,85 +173,30 @@ export default function Page(): React.JSX.Element {
                 alignItems: "center"
             }}
             pagination={true}
-            slidesPerView={1.6}
+            slidesPerView={1.4}
             spaceBetween={50}
             centeredSlides={true}
             direction={"vertical"}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}>
-            <SwiperSlide>{Item(1, {
-                id: "1",
-                name: "lolkek",
-                artist: "cheburek",
-                image: "https://example.com/path-to-image.jpg",
-            }, isPaused, setIsPaused)}</SwiperSlide>
-            {/* <SwiperSlide>{Item(1, {
-                id: "1",
-                name: "lolkek",
-                artist: "cheburek"
-            }, isPaused, setIsPaused)}</SwiperSlide>
-            <SwiperSlide>{Item(1, {
-                id: "1",
-                name: "lolkek",
-                artist: "cheburek"
-            }, isPaused, setIsPaused)}</SwiperSlide> */}
-            {/*<SwiperSlide>{Item(1, {id: "2"}, isPaused, setIsPaused)}</SwiperSlide>*/}
-            {/*<SwiperSlide>{Item(1, {id: "3"}, isPaused, setIsPaused)}</SwiperSlide>*/}
-            {/*<SwiperSlide>{Item(1, {id: "4"}, isPaused, setIsPaused)}</SwiperSlide>*/}
-            {/*<SwiperSlide>{Item(1, {id: "5"}, isPaused, setIsPaused)}</SwiperSlide>*/}
+            loop={true}
+            initialSlide={0}
+            onRealIndexChange={async (swiper) => {
+                if (player != null) {
+                    console.log(swiper.realIndex);
+                    player.src = it[swiper.realIndex].audioUrl;
+
+                    await player.play().then(() => {
+                        setIsPlaying(true);
+                    });
+                }
+            }}>
+            {it.map((item, i) => (
+                <SwiperSlide key={i} virtualIndex={i}>
+                    <BeatCard title={item.name} author={item.artist} audioUrl={item.audioUrl}
+                              coverImage={item.imgUrl}
+                              tags={item.tags} useShimmer={false} key={i}/>
+                </SwiperSlide>
+            ))}
+
         </Swiper>
     );
 }
-const styles = {
-    button: {
-        backgroundColor: "#007BFF",
-        padding: 10,
-        margin: 5,
-        borderRadius: 5,
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    trackTitle: {
-        fontSize: 30,
-        margin: 10,
-        fontWeight: "700",
-        color: "#000",
-    },
-    artistName: {
-        fontSize: 25,
-        margin: 10,
-        color: "#555",
-        fontWeight: "500",
-        marginTop: 5,
-    },
-    pauseButton: {
-        padding: 10,
-        width: "5vmax",
-        height: "5vmax",
-        borderRadius: "100%",
-        backgroundColor: "rgba(255, 255, 255, 0.3)",
-        border: "none",
-    },
-    footer: {
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        alignSelf: "center",
-        width: "100%",
-        marginTop: 20,
-        marginBottom: 20,
-    },
-    iconButton: {
-        backgroundColor: "#1a1a1a",
-        borderRadius: "40%",
-        minWidth: 40,
-        minHeight: 40,
-        width: 55,
-        height: 55,
-        justifyContent: "center",
-        alignItems: "center",
-        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
-        border: "none",
-    },
-};

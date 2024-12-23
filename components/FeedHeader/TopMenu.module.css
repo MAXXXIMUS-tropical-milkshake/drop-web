@@ -1,0 +1,101 @@
+.topMenu {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 100;
+    white-space: nowrap;
+    text-align: center;
+    justify-content: space-evenly;
+    width: 100%;
+    box-shadow: 0 45px 25px rgba(0, 0, 0, 0.8);
+    font: 400 18px/1 ALS Gorizont, -apple-system, Roboto, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+.topMenuMobile {
+    scrollbar-width: none;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    z-index: 100;
+    white-space: nowrap;
+    text-align: center;
+    justify-content: space-between;
+    width: 100%;
+    box-shadow: 0 40px 20px rgba(0, 0, 0, 0.65);
+    font: 400 18px/1 ALS Gorizont, -apple-system, Roboto, Helvetica, sans-serif;
+    overflow-x: auto;
+}
+
+.topMenuMobile::-webkit-scrollbar {
+    display: none;
+}
+
+.topMenuWrapper {
+    max-width: 600px;
+    width: 80vw;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    align-self: center;
+}
+
+.topMenuWrapperMobile {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+    margin: 10px;
+}
+
+.menuButton, .menuButtonInactive {
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    border: 1px solid rgba(84, 84, 86, 0.34);
+    background-blend-mode: overlay, luminosity;
+    backdrop-filter: blur(15px);
+    display: flex;
+    min-height: 50px;
+    min-width: 80px;
+    gap: 10px;
+    overflow: hidden;
+    padding: 0 20px;
+    cursor: pointer;
+}
+
+.menuButtonInactive {
+    color: #8e8e93;
+}
+
+.menuButton:focus-visible, .menuButtonInactive:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.menuIcon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center;
+    width: 20px;
+    align-self: stretch;
+    margin: auto 0;
+}
+
+.menuLabel {
+    align-self: stretch;
+    margin: auto 0;
+}
