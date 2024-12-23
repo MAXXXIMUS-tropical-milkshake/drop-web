@@ -3,7 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {BeatCard} from "@/components/BeatCard/BeatCard";
 import {FeedIsPlayingContext} from "@/context/FeedIsPlayingContext";
 import {Swiper, SwiperSlide} from "swiper/react";
-import { TagProps } from "@/components/BeatCard/types";
+import {TagProps} from "@/components/BeatCard/types";
 
 type Card = {
     index: number;
@@ -23,16 +23,17 @@ type PredefCard = {
 const downloadPrefix = "https://dl.dropboxusercontent.com/";
 export default function Page(): React.JSX.Element {
 
+    // @ts-ignore
     const predefItems: PredefCard[] = [
         {
             it: 0,
             audioUrl: "scl/fi/cy77j3p99tfzlktjugpp8/1.mp3?rlkey=j5mz0c3vigrr5ap05vvcgxe0m&st=zdvl9iq1&dl=0",
             imgUrl: "https://i.ibb.co/vvnsP3b/ey-Jid-WNr-ZXQi-Oi-Jid-HMt-Y29ud-GVud-CIs-Imtle-SI6-In-Vz-ZXJz-L3-Byb2-Qv-Mj-A2-MDQy-NC9pb-WFn-ZS9-K.webp",
             tags: [
-                  {type: "primary", label: "темп", value: "128"},
-                  {type: "secondary", label: "жанр", value: "rap"},
-                  {type: "secondary", label: "тональность", value: "major"},
-                  {type: "secondary", label: "настроение", value: "весёлое"}
+                {type: "primary", label: "темп", value: "128"},
+                {type: "secondary", label: "жанр", value: "rap"},
+                {type: "secondary", label: "тональность", value: "major"},
+                {type: "secondary", label: "настроение", value: "весёлое"}
             ]
         },
         {
@@ -192,7 +193,7 @@ export default function Page(): React.JSX.Element {
                 <SwiperSlide key={i} virtualIndex={i}>
                     <BeatCard title={item.name} author={item.artist} audioUrl={item.audioUrl}
                               coverImage={item.imgUrl}
-                              tags={item.tags}  useShimmer={false} key={i}/>
+                              tags={item.tags} useShimmer={false} key={i}/>
                 </SwiperSlide>
             ))}
 
