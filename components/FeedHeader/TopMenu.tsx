@@ -3,6 +3,8 @@ import React, {useEffect} from 'react';
 import {useDeviceSize} from '@/hooks/useDeviceSize';
 import {MenuButton} from '@/components/FeedHeader/MenuButton';
 import styles from './TopMenu.module.css';
+import { useState } from 'react';
+import { FiltersView } from '../Filters/FiltersView';
 
 const menuItems = [
     {
@@ -26,6 +28,19 @@ export const TopMenu: React.FC = () => {
 
 };
 const TopMenuDesktop: React.FC = () => {
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+    const openFilters = () => setIsFilterOpen(true);
+    const closeFilters = () => setIsFilterOpen(false);
+
+    const applyFilters = () => {
+        console.log('Фильтры применены');
+        setIsFilterOpen(false);
+    };
+
+    const resetFilters = () => {
+        console.log('Фильтры сброшены');
+    };
     return (
         <nav className={styles.topMenu}>
             <div className={styles.topMenuWrapper}>
@@ -35,8 +50,20 @@ const TopMenuDesktop: React.FC = () => {
                         icon={item.icon}
                         label={item.label}
                         isActive={item.isActive}
+                        onClick={() => {}}
                     />
                 ))}
+                <MenuButton
+                    key={2}
+                    icon={menuItems[2].icon}
+                    label={menuItems[2].label}
+                    isActive={menuItems[2].isActive}
+                    onClick={openFilters}
+                />
+                <FiltersView isOpen={isFilterOpen} onClose={closeFilters}>
+                  <div/>
+                </FiltersView>
+
             </div>
         </nav>);
 }
@@ -50,6 +77,7 @@ const TopMenuMobile: React.FC = () => {
                         icon={item.icon}
                         label={item.label}
                         isActive={item.isActive}
+                        onClick={() => {}}
                     />
                 ))}
             </div>

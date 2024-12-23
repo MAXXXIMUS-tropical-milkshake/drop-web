@@ -2,9 +2,9 @@
 import {TopMenu} from "@/components/FeedHeader/TopMenu";
 import {RibbonControls} from "@/components/FeedControls/RibbonControls";
 import React, {useEffect} from "react";
-import {SessionProvider} from "@/context/AuthContext";
-import {FeedIsPlayingProvider} from "@/context/FeedIsPlayingContext";
+import {SessionProvider} from "@/context/AuthContext"; import {FeedIsPlayingProvider} from "@/context/FeedIsPlayingContext";
 import {TelegramProvider, useTelegram} from "@/context/telegram";
+import { FiltersView } from "@/components/Filters/FiltersView";
 
 export default function RootLayout({
                                        children,
@@ -58,10 +58,15 @@ export default function RootLayout({
             backgroundColor: '#5c5959',
             backgroundImage: "radial-gradient(farthest-corner at 30% 60%, rgba(63,94,251,1) 0%, rgba(177,12,186,0.7959558823529411) 10%, rgba(207,47,127,1) 20%, rgba(0,0,0,1) 50%",
         }}>
-
-        <TelegramProvider>
-            <RootWithNoTgProvider children={children}/>
-        </TelegramProvider>
+              <FeedIsPlayingProvider>
+                  <SessionProvider>
+                      {TopMenu({})}
+                      <audio hidden={true} id={"feedAudio"} preload={"auto"} loop={true}/>
+                      {children}
+                      <RibbonControls/>
+                  </SessionProvider>
+              </FeedIsPlayingProvider>) :
+          (<div style={{color: 'white'}}>Make sure web app is opened from telegram client</div>)
         </body>
         </html>
     );
@@ -70,7 +75,7 @@ export default function RootLayout({
 const RootWithNoTgProvider = ({children}) => {
     const {user, webApp} = useTelegram();
     console.log("user " + user);
-    return (user !== undefined ? (
+    return (user == undefined ? (
                 <FeedIsPlayingProvider>
                     <SessionProvider>
                         {TopMenu({})}
