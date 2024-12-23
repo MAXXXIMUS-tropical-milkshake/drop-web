@@ -85,9 +85,9 @@
 
 .tags {
     display: flex;
+    flex-wrap: wrap;
     margin-top: 15px;
     width: 100%;
-    align-items: start;
     gap: 5px;
     text-align: center;
     font: 14px ALS Hauss, sans-serif;

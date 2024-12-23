@@ -58,12 +58,14 @@ export const BeatCard: React.FC<BeatCardProps> = ({
                             <Tag key={index} {...tag} />
                         ))}
                     </div> */}
+                    <div className={styles.tags}>
+                        {tags.map((tag, index) => (
 
-                    {tags.map((tag, index) => (
-                        <div className={styles.tags}>
                             <Tag key={index} {...tag} />
-                        </div>
-                    ))}
+
+                        ))}
+                    </div>
+
                 </div>
                 <div className={styles.actions}>
                     <ActionButton
